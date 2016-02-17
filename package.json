@@ -16,5 +16,8 @@
     "http-server": "^0.8.5",
     "stringify": "^4.0.1",
     "watchify": "^3.7.0"
+  },
+  "dependencies": {
+    "ractive": "^0.7.3"
   }
 }

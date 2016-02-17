@@ -12,6 +12,45 @@
 </head>
 <body>
   <div id='container'></div>
+  <script id="markup" type="text/ractive">
+    <!-- Compose Partials -->
+    {{>result-header}}
+    {{>test-table}}
+
+    <!-- Result Header -->
+    {{#partial result-header}}
+      {{#if allTestsAreDone}}
+        {{#if allTestsPassed}}
+          All tests passed
+        {{else}}
+          Some tests failed
+        {{/if}}
+
+      {{else}}
+        Pass - {{pass}} | Fail - {{fail}} | Running - {{running}}
+      {{/if}}
+    {{/partial}}
+
+    <!-- Test Table -->
+    {{#partial test-table}}
+      <table>
+        <tr>
+          <th>#</th>
+          <th>Test Name</th>
+          <th>Test Status</th>
+          <th>Start Test</th>
+        </tr>
+        {{#each tests:index}}
+          <tr>
+            <td>{{index + 1}}</td>
+            <td>{{description}}</td>
+            <td>{{status}}</td>
+            <td><button on-click='startTest:{{this}}'>Start Test</button></td>
+          </tr>
+        {{/each}}
+      </table>
+    {{/partial}}
+  </script>
 </body>
 <script type="text/javascript" src="./build/bundle.js"></script>
 </html>
