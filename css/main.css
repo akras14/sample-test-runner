@@ -1,0 +1,35 @@
+#container {
+  margin: 20px;
+}
+
+#status {
+  margin-bottom: 20px;
+  background-color: lightgrey;
+}
+
+#status span {
+  display: inline-block;
+  width: 200px;
+}
+#status .happy, #status .sad {
+  padding-left: 10px;
+}
+#status .happy {
+  background-color: green;
+}
+
+#status .sad {
+  background-color: red;
+}
+#test-table {
+  width: 100%;
+  max-width: 700px;
+  min-width: 550px;
+}
+#test-table th, #test-table td {
+  min-width: 50px;
+}
+
+#test-table button {
+  width: 100px;
+}

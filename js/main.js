@@ -13,6 +13,7 @@ var ractive = new Ractive({
   data: {
     tests: tests.map(function(test){
       test.status = testStatus[WAITING];
+      test.disabled = false;
       return test;
     }),
     running: 0,
@@ -40,6 +41,7 @@ ractive.on('startTest', function(event, test){
   ractive.add('running');
   //Update test status
   test.status = testStatus[RUNNING];
+  test.disabled = true;
   ractive.update('tests');
 
   test.run(function(result){

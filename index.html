@@ -9,6 +9,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="format-detection" content="telephone=no">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
   <div id='container'></div>
@@ -19,21 +21,26 @@
 
     <!-- Result Header -->
     {{#partial result-header}}
-      {{#if allTestsAreDone}}
-        {{#if allTestsPassed}}
-          All tests passed
+      <section id="status">
+        {{#if allTestsAreDone}}
+          <div class="{{allTestsPassed ? 'happy' : 'sad'}}">
+            {{#if allTestsPassed}}
+              All tests passed
+            {{else}}
+              Some tests failed
+            {{/if}}
+          </div>
         {{else}}
-          Some tests failed
+          <span>Pass - {{pass}} </span>
+          <span>Fail - {{fail}} </span>
+          <span>Running - {{running}}</span>
         {{/if}}
-
-      {{else}}
-        Pass - {{pass}} | Fail - {{fail}} | Running - {{running}}
-      {{/if}}
+      </section>
     {{/partial}}
 
     <!-- Test Table -->
     {{#partial test-table}}
-      <table>
+      <table id="test-table">
         <tr>
           <th>#</th>
           <th>Test Name</th>
@@ -45,7 +52,7 @@
             <td>{{index + 1}}</td>
             <td>{{description}}</td>
             <td>{{status}}</td>
-            <td><button on-click='startTest:{{this}}'>Start Test</button></td>
+            <td><button on-click='startTest:{{this}}' disabled="{{disabled}}">{{ disabled ? 'Test Started' : 'Start Test' }}</button></td>
           </tr>
         {{/each}}
       </table>
