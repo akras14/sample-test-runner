@@ -35,8 +35,7 @@ var ractive = new Ractive({
   }
 });
 
-ractive.on('startTest', function(event, test){
-
+function runTest(test){
   //Increment running count
   ractive.add('running');
   //Update test status
@@ -58,4 +57,14 @@ ractive.on('startTest', function(event, test){
     }
     ractive.update('tests');
   })
+}
+
+ractive.on('startTest', function(event, test){
+  runTest(test);
+});
+
+ractive.on('startAll', function(){
+  tests.forEach(function(test){
+    runTest(test);
+  });
 });
