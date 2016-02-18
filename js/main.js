@@ -16,11 +16,20 @@ var ractive = new Ractive({
       test.disabled = false;
       return test;
     }),
-    running: 0,
-    pass: 0,
-    fail: 0
   },
   computed: {
+    running: function(){
+      var tests = this.get('tests');
+      return getCount(tests, RUNNING);
+    },
+    pass: function(){
+      var tests = this.get('tests');
+      return getCount(tests, PASSED);
+    },
+    fail: function(){
+      var tests = this.get('tests');
+      return getCount(tests, FAILED);
+    },
     allTestsAreDone: function(){
       var passed = this.get('pass');
       var failed = this.get('fail');
@@ -36,27 +45,34 @@ var ractive = new Ractive({
 });
 
 function runTest(test){
-  //Increment running count
-  ractive.add('running');
   //Update test status
   test.status = testStatus[RUNNING];
   test.disabled = true;
   ractive.update('tests');
 
   test.run(function(result){
-    //Decrement running count
-    ractive.subtract('running');
 
     //Update test result and status
     if(result){
       test.status = testStatus[PASSED];
-      ractive.add('pass');
     } else {
       test.status = testStatus[FAILED];
-      ractive.add('fail');
     }
     ractive.update('tests');
   })
+}
+
+function getCount(tests, statusIndex){
+  var count = 0;
+  if(!ractive){
+    return count;
+  }
+  tests.forEach(function(test){
+    if(test.status === testStatus[statusIndex]){
+      count++;
+    }
+  });
+  return count;
 }
 
 ractive.on('startTest', function(event, test){
